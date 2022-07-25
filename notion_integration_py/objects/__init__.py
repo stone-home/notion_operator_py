@@ -34,11 +34,7 @@ class NotionObject(ABC):
 
         """
         for key in kwargs.keys():
-            if isinstance(kwargs[key], Enum):
-                value = kwargs[key].value
-            else:
-                value = kwargs[key]
-            self._update_attribute(key, value)
+            self._update_attribute(key, kwargs[key])
 
     def _update_attribute(self, name, value):
         """Create an attribute on current object
@@ -49,6 +45,8 @@ class NotionObject(ABC):
 
         """
         if value is not None:
+            if isinstance(value, Enum):
+                value = value.value
             setattr(self, name, value)
 
     def __getattr__(self, item):

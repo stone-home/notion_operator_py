@@ -4,11 +4,11 @@
 # @Project: nt-integration-sdk
 
 
-from notion_integration_py.objects.properties import DateProperty
-from notion_integration_py.utils.utils import iso8601_date
 
+from notion_integration_py.database import Database
 
 
 if __name__ == '__main__':
-    x = DateProperty(start=iso8601_date(year="2022", month="01"), end=iso8601_date(year="2022", month="02"))
-    print(x.export2json())
+    d = Database("Name", "test", "476a04a6be064fc1b3efd15b68e15e79")
+    d.add_rich_text(key="Description", plain_text="xxxxx", annotations={"bold": True})
+    print(d.export2json())

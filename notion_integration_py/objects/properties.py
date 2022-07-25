@@ -4,32 +4,45 @@
 # @Project: nt-integration-sdk
 
 from . import NotionObject
-from .common import Text, RichText, Select, Date, People, File, Formula
+from .common import Text, RichText, Select, Date, People, File, Formula, Annotations
 
 
-class TitleProperty(NotionObject):
-    def __init__(self, plain_text: str):
-        self._auto_update_attributes(title=[Text(content=plain_text)])
+class PropertyObject(NotionObject):
+    pass
 
 
-class RichTextProperty(NotionObject):
-    def __init__(self, plain_text: str, href: str = None, annotations: dict = None):
-        self._auto_update_attributes(rich_text=[RichText(plain_text=plain_text,
-                                                         href=href,
-                                                         annotations=annotations)])
+class _Text(PropertyObject):
+    def __init__(self, content: str):
+        self._auto_update_attributes(text=Text(content=content))
 
 
-class NumberProperty(NotionObject):
+class TitleProperty(PropertyObject):
+    def __init__(self, content: str):
+        self._auto_update_attributes(title=[_Text(content)])
+
+
+class _RichText(PropertyObject):
+    def __init__(self, content: str, annotations: dict = None):
+        self._auto_update_attributes(text=Text(content=content),
+                                     annotations=Annotations(**annotations) if annotations else None)
+
+
+class RichTextProperty(PropertyObject):
+    def __init__(self, content: str, annotations: dict = None):
+        self._auto_update_attributes(rich_text=[_RichText(content, annotations)])
+
+
+class NumberProperty(PropertyObject):
     def __init__(self, number: int):
         self._auto_update_attributes(number=number)
 
 
-class SelectProperty(NotionObject):
+class SelectProperty(PropertyObject):
     def __init__(self, name: str, color: str = None):
         self._auto_update_attributes(select=Select(name=name, color=color))
 
 
-class MultipleSelectProperty(NotionObject):
+class MultipleSelectProperty(PropertyObject):
     def __init__(self):
         self._auto_update_attributes(multi_select=[])
 
@@ -37,12 +50,12 @@ class MultipleSelectProperty(NotionObject):
         self.multi_select.append(Select(name=name, color=color))
 
 
-class DateProperty(NotionObject):
+class DateProperty(PropertyObject):
     def __init__(self, start: str, end: str = None, time_zone: str = None):
         self._auto_update_attributes(date=Date(start, end, time_zone))
 
 
-class PeopleProperty(NotionObject):
+class PeopleProperty(PropertyObject):
     def __init__(self):
         self._auto_update_attributes(people=[])
 
@@ -50,7 +63,7 @@ class PeopleProperty(NotionObject):
         self.people.append(People(user_id=user_id))
 
 
-class FileProperty(NotionObject):
+class FileProperty(PropertyObject):
     def __init__(self):
         self._auto_update_attributes(files=[])
 
@@ -58,27 +71,27 @@ class FileProperty(NotionObject):
         self.files.append(File(name, url))
 
 
-class CheckBoxProperty(NotionObject):
+class CheckBoxProperty(PropertyObject):
     def __init__(self, checked: bool = False):
         self._auto_update_attributes(checkbox=checked)
 
 
-class URLProperty(NotionObject):
+class URLProperty(PropertyObject):
     def __init__(self, url: str):
         self._auto_update_attributes(url=url)
 
 
-class EmailProperty(NotionObject):
+class EmailProperty(PropertyObject):
     def __init__(self, email: str):
         self._auto_update_attributes(email=email)
 
 
-class PhoneNumberProperty(NotionObject):
+class PhoneNumberProperty(PropertyObject):
     def __init__(self, phone_number: str):
         self._auto_update_attributes(phone_number=phone_number)
 
 
-class FormulaProperty(NotionObject):
+class FormulaProperty(PropertyObject):
     def __init__(self, experssion: str):
         self._auto_update_attributes(formula=Formula(experssion))
 

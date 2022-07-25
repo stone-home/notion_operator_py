@@ -48,6 +48,11 @@ class SelectColor(Enum):
     red = "red"
 
 
+class ParentType(Enum):
+    database_id = "database_id"
+    page_id = "page_id"
+
+
 class RichText(NotionObject):
     def __init__(self,
                  plain_text: str,
@@ -81,7 +86,8 @@ class Annotations(NotionObject):
 
 class Text(NotionObject):
     def __init__(self, content: str, link: str = None, **kwargs):
-        self._auto_update_attributes(content=content, link=Link(url=link))
+        self._auto_update_attributes(content=content,
+                                     link=Link(url=link) if link else None)
 
 
 class Link(NotionObject):
@@ -114,3 +120,12 @@ class File(NotionObject):
 class Formula(NotionObject):
     def __init__(self, expression: str):
         self._auto_update_attributes(expression=expression)
+
+
+class Parent(NotionObject):
+    def __init__(self, parent_id: str, parent_type="database_id"):
+        if parent_type is None:
+            parent_type = "database_id"
+        _parent_type = getattr(ParentType, parent_type).value
+        self._update_attribute("type", _parent_type)
+        self._update_attribute(_parent_type, parent_id)
