@@ -4,13 +4,26 @@
 # @Project: nt-integration-sdk
 
 from enum import Enum
-from . import NotionObject
+from .object import NotionObject
 
 
 class RichTextType(Enum):
     text = "text"
     mention = "mention"
     equation = "equation"
+
+
+class SelectColor(Enum):
+    default = "default"
+    gray = "gray"
+    brown = "brown"
+    orange = "orange"
+    yellow = "yellow"
+    green = "green"
+    blue = "blue"
+    purple = "purple"
+    pink = "pink"
+    red = "red"
 
 
 class Color(Enum):
@@ -35,25 +48,12 @@ class Color(Enum):
     red_background = "red_background"
 
 
-class SelectColor(Enum):
-    default = "default"
-    gray = "gray"
-    brown = "brown"
-    orange = "orange"
-    yellow = "yellow"
-    green = "green"
-    blue = "blue"
-    purple = "purple"
-    pink = "pink"
-    red = "red"
-
-
 class ParentType(Enum):
     database_id = "database_id"
     page_id = "page_id"
 
 
-class RichText(NotionObject):
+class _RichText(NotionObject):
     def __init__(self,
                  plain_text: str,
                  href: str = None,
@@ -88,6 +88,17 @@ class Text(NotionObject):
     def __init__(self, content: str, link: str = None, **kwargs):
         self._auto_update_attributes(content=content,
                                      link=Link(url=link) if link else None)
+
+
+class RichText(NotionObject):
+    def __init__(self, content: str, annotations: dict = None, **kwargs):
+        self._auto_update_attributes(text=Text(content=content),
+                                     annotations=Annotations(**annotations) if annotations else None)
+
+
+class Title(NotionObject):
+    def __init__(self, content: str, **kwargs):
+        self._auto_update_attributes(text=Text(content=content))
 
 
 class Link(NotionObject):

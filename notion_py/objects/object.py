@@ -1,11 +1,29 @@
 # -*- coding: utf-8 -*-
-# @Filename : __init__.py
-# @Date : 2022-07-25-10-33
+# @Filename : object
+# @Date : 2022-07-26-13-09
 # @Project: nt-integration-sdk
 
-from abc import ABC, abstractmethod
+
+from abc import ABC
 from enum import Enum
-from notion_integration_py.utils import utils
+
+
+def obj2dict(obj):
+    if not hasattr(obj, "__dict__"):
+        return obj
+    result = {}
+    for key, val in obj.__dict__.items():
+        # avoiding exposure to the protect&private attribute
+        if key.startswith("_"):
+            continue
+        element = []
+        if isinstance(val, list):
+            for item in val:
+                element.append(obj2dict(item))
+        else:
+            element = obj2dict(val)
+        result[key] = element
+    return result
 
 
 class NotionObject(ABC):
@@ -24,7 +42,7 @@ class NotionObject(ABC):
         Returns:
 
         """
-        return utils.obj2dict(self)
+        return obj2dict(self)
 
     def _auto_update_attributes(self, **kwargs):
         """Create all attributes that exist on variable `xargs` on current object

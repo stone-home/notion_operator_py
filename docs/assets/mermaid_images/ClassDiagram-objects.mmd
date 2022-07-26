@@ -1,0 +1,113 @@
+classDiagram
+
+  class NotionObject{
+    <<abstract>>
+    + load(**date)$
+    + export2json()
+    # auto_update_attributes(**kwargs)
+    # update_attribute(name, value)
+    - __getattr__(item)
+  }
+
+  class RichTextType{
+    <<Enum>>
+    text
+    mention
+    eqution
+  }
+
+  class Color {
+    <<Enum>>
+    default
+    gray
+    brown
+    orange
+    yellow
+    green
+    blue
+    purple
+    pink
+    red
+    gray_background
+    brown_background
+    orange_background
+    yellow_background
+    green_background
+    blue_background
+    purple_background
+    pink_background
+    red_background
+  }
+
+  class SelectColor{
+    <<Enum>>
+    default
+    gray
+    brown
+    orange
+    yellow
+    green
+    blue
+    purple
+    pink
+    red
+  }
+
+  class ParentType{
+    <<Enum>>
+    database_id
+    page_id
+  }
+
+ %% common.py
+  _RichText ..|> NotionObject
+  Annotations ..|> NotionObject
+  Annotations ..> Color
+  _RichText ..> Annotations
+  _RichText ..> RichTextType
+  Text ..|> NotionObject
+  Text ..> Link
+  Title ..|> NotionObject
+  Title ..> Text
+  RichText ..> Text
+  RichText ..> Annotations
+  Link ..|> NotionObject
+  Select ..|> NotionObject
+  Select ..> SelectColor
+  Date ..|> NotionObject
+  People ..|> NotionObject
+  File ..|> NotionObject
+  Formula ..|> NotionObject
+  Parent ..|> NotionObject
+  Parent ..> ParentType
+
+
+  %% properties.py
+
+  PropertyObject --|> NotionObject
+  TitleProperty ..|> PropertyObject
+  TitleProperty ..> Title
+  RichTextProperty ..|> PropertyObject
+  RichTextProperty ..> RichText
+  NumberProperty ..|> PropertyObject
+  SelectProperty ..|> PropertyObject
+  SelectProperty ..> Select
+  DateProperty ..|> PropertyObject
+  DateProperty ..> Date
+  CheckBoxProperty ..|> PropertyObject
+  URLProperty ..|> PropertyObject
+  EmailProperty ..|> PropertyObject
+  PhoneNumberProperty ..|> PropertyObject
+  FormulaProperty ..|> PropertyObject
+  FormulaProperty ..> Formula
+
+  MultiOptionsPropertyObject --|> PropertyObject
+  MultipleSelectProperty ..|> MultiOptionsPropertyObject
+  MultipleSelectProperty ..> Select
+  PeopleProperty ..|> MultiOptionsPropertyObject
+  PeopleProperty ..> People
+  FileProperty ..|> MultiOptionsPropertyObject
+  FileProperty ..> File
+
+  Properties ..|> NotionObject
+  Properties ..> PropertyObject
