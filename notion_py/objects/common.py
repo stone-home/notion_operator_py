@@ -53,7 +53,7 @@ class ParentType(Enum):
     page_id = "page_id"
 
 
-class _RichText(NotionObject):
+class RichText1(NotionObject):
     def __init__(self,
                  plain_text: str,
                  href: str = None,
@@ -140,3 +140,8 @@ class Parent(NotionObject):
         _parent_type = getattr(ParentType, parent_type).value
         self._update_attribute("type", _parent_type)
         self._update_attribute(_parent_type, parent_id)
+
+
+class Emoji(NotionObject):
+    def __init__(self, emoji: str):
+        self._auto_update_attributes(type="emoji", emoji=emoji)

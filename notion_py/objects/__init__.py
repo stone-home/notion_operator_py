@@ -4,7 +4,7 @@
 # @Project: nt-integration-sdk
 
 from .properties import *
-from .common import Parent
+from .common import *
 
 
 __all__ = [
@@ -27,7 +27,10 @@ __all__ = [
     "PropertyObject",
     "NotionObject",
     # Common Object
-    "Parent"
+    "Parent",
+    "File",
+    "Emoji",
+    "RichText"
 ]
 
 

@@ -3,80 +3,34 @@
 # @Date : 2022-07-25-17-51
 # @Project: nt-integration-sdk
 
-
-from .objects import (
-    NotionObject,
-    Parent,
-    TitleProperty,
-    RichTextProperty,
-    NumberProperty,
-    SelectProperty,
-    MultipleSelectProperty,
-    DateProperty,
-    PeopleProperty,
-    FileProperty,
-    CheckBoxProperty,
-    URLProperty,
-    EmailProperty,
-    PhoneNumberProperty,
-    FormulaProperty,
-    Properties
-)
+import os
+from notion_client.client import Client
+from .builder import PageAndDatabaseBuilder
 
 
-class PageObject(NotionObject):
+class PagePropertiesBuilder(PageAndDatabaseBuilder):
     pass
 
 
-class Page(PageObject):
-    def __init__(self, title_key: str, title: str, parent_id: str, parent_type="database_id"):
-        self.edit_parent(parent_id, parent_type)
-        self.properties = Properties(key=title_key, title=title)
+class Page:
+    def __init__(self, client: Client = None):
+        self.client = client if client else Client(auth=os.environ['NOTION_TOKEN'])
 
-    def edit_parent(self, parent_id, parent_type='database_id'):
-        setattr(self, "parent", Parent(parent_id=parent_id, parent_type=parent_type))
+    def new_builder(self) -> PagePropertiesBuilder:
+        return PagePropertiesBuilder()
 
-    def add_rich_text(self, key: str, plain_text: str, annotations: dict = None):
-        return self.properties.update_property(key, RichTextProperty(plain_text, annotations=annotations))
+    def get(self, page_id: str):
+        return self.client.pages.retrieve(page_id)
 
-    def add_number(self, key: str, number: int):
-        return self.properties.update_property(key, NumberProperty(number))
+    def update(self, page_id: str, builder: PagePropertiesBuilder):
+        return self.client.pages.update(page_id=page_id, **builder.export2json())
 
-    def add_select(self, key: str, select_name: str, select_color: str = None):
-        return self.properties.update_property(key, SelectProperty(select_name, select_color))
-
-    def add_date(self, key: str, start: str, end: str = None, time_zone: str = None):
-        return self.properties.update_property(key, DateProperty(start, end, time_zone))
-
-    def add_checkbox(self, key: str, checked: bool = False):
-        return self.properties.update_property(key, CheckBoxProperty(checked))
-
-    def add_url(self, key: str, url: str):
-        return self.properties.update_property(key, URLProperty(url))
-
-    def add_email(self, key: str, email: str):
-        return self.properties.update_property(key, EmailProperty(email))
-
-    def add_phone_number(self, key: str, phone_number: str):
-        return self.properties.update_property(key, PhoneNumberProperty(phone_number))
-
-    def add_formula(self, key: str, experssion: str):
-        return self.properties.update_property(key, FormulaProperty(experssion))
-
-    def add_multiple_select(self, key: str):
-        return self.properties.update_property(key, MultipleSelectProperty())
-
-    def add_people(self, key: str):
-        return self.properties.update_property(key, PeopleProperty())
-
-    def add_file(self, key: str):
-        return self.properties.update_property(key, FileProperty())
-
-    def remove_property(self, key):
-        self.properties.delete_property(key)
-
-
-
-
-
-
+    def create(self,
+               builder: PagePropertiesBuilder,
+               title: str,
+               title_key: str,
+               parent_id: str,
+               parent_type: str = "database_id"):
+        builder.edit_parent(parent_id=parent_id, parent_type=parent_type)
+        builder.edit_properties(title_key=title_key, title=title)
+        self.client.pages.create(**builder.export2json())

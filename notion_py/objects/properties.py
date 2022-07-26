@@ -218,3 +218,39 @@ class Properties(NotionObject):
 
     def delete_property(self, key):
         delattr(self, key)
+
+    def add_rich_text(self, key: str, plain_text: str, annotations: dict = None):
+        return self.update_property(key, RichTextProperty(plain_text, annotations=annotations))
+
+    def add_number(self, key: str, number: int):
+        return self.update_property(key, NumberProperty(number))
+
+    def add_select(self, key: str, select_name: str, select_color: str = None):
+        return self.update_property(key, SelectProperty(select_name, select_color))
+
+    def add_date(self, key: str, start: str, end: str = None, time_zone: str = None):
+        return self.update_property(key, DateProperty(start, end, time_zone))
+
+    def add_checkbox(self, key: str, checked: bool = False):
+        return self.update_property(key, CheckBoxProperty(checked))
+
+    def add_url(self, key: str, url: str):
+        return self.update_property(key, URLProperty(url))
+
+    def add_email(self, key: str, email: str):
+        return self.update_property(key, EmailProperty(email))
+
+    def add_phone_number(self, key: str, phone_number: str):
+        return self.update_property(key, PhoneNumberProperty(phone_number))
+
+    def add_formula(self, key: str, experssion: str):
+        return self.update_property(key, FormulaProperty(experssion))
+
+    def add_multiple_select(self, key: str):
+        return self.update_property(key, MultipleSelectProperty())
+
+    def add_people(self, key: str):
+        return self.update_property(key, PeopleProperty())
+
+    def add_file(self, key: str):
+        return self.update_property(key, FileProperty())

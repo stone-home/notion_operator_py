@@ -4,9 +4,11 @@
 # @Project: nt-integration-sdk
 
 from notion_py.page import Page
+from notion_py.database import Database
 
 
 if __name__ == '__main__':
-    d = Page("Name", "test", "476a04a6be064fc1b3efd15b68e15e79")
-    d.add_rich_text(key="Description", plain_text="xxxxx", annotations={"bold": True})
-    print(d.export2json())
+    db = Database()
+    _builder = db.new_builder()
+    _builder.edit_title(plain_text="[DB]New Text")
+    db.update(database_id="476a04a6be064fc1b3efd15b68e15e79", builder=_builder)
