@@ -12,14 +12,9 @@ def get_readme():
         return file.read()
 
 
-def get_version():
-    version = os.environ.get("GITHUB_REF_NAME", "v0.0.0"),
-    return version[1:]
-
-
 setup(
     name='notion-operator-stonebo1',
-    version=get_version(),
+    version="0.2.1",
     license='MIT',
     author="Jiabo Shi",
     author_email='stonebo0121@gmail.com',
