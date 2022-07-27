@@ -21,7 +21,8 @@ setup(
     description="Python Client for Notion Integration Only",
     long_description=get_readme(),
     long_description_type="text/markdown",
-    packages=find_packages(),
+    package_dir={'':"notion_operator_py"},
+    packages=find_packages("notion_operator_py"),
     url='https://github.com/stonebo/notion-integration-sdk',
     python_requires=">=3.7, <4",
     install_requires=[
