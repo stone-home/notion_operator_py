@@ -5,6 +5,8 @@
 from .database import Database
 from .page import Page
 
+name = "notion-integration-operator-python"
+
 __all__ = [
     "Page",
     "Database"
