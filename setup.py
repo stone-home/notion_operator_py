@@ -2,6 +2,7 @@
 # @Filename : setup
 # @Date : 2022-07-27-08-59
 # @Project: nt-integration-sdk
+import os
 
 from setuptools import setup, find_packages
 
@@ -11,9 +12,14 @@ def get_readme():
         return file.read()
 
 
+def get_version():
+    version = os.environ.get("GITHUB_REF_NAME", "v0.0.0"),
+    return version[1:]
+
+
 setup(
     name='notion-operator-stonebo1',
-    version='0.2.0',
+    version=get_version(),
     license='MIT',
     author="Jiabo Shi",
     author_email='stonebo0121@gmail.com',
