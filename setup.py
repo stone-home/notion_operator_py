@@ -13,16 +13,15 @@ def get_readme():
 
 
 setup(
-    name='notion-operator-stonebo1',
-    version="0.2.2",
+    name='notion_operator_py',
+    version="0.2.3",
     license='MIT',
     author="Jiabo Shi",
     author_email='stonebo0121@gmail.com',
     description="Python Client for Notion Integration Only",
     long_description=get_readme(),
     long_description_type="text/markdown",
-    package_dir={'':"notion_operator_py"},
-    packages=find_packages("notion_operator_py"),
+    packages=find_packages(),
     url='https://github.com/stonebo/notion-integration-sdk',
     python_requires=">=3.7, <4",
     install_requires=[
