@@ -3,8 +3,8 @@
 # @Date : 2022-07-25-15-27
 # @Project: nt-integration-sdk
 
-from notion_py.page import Page
-from notion_py.database import Database
+from notion_operator_py.page import Page
+from notion_operator_py.database import Database
 
 
 if __name__ == '__main__':

@@ -12,8 +12,8 @@ def get_readme():
 
 
 setup(
-    name='notion-integration-operator-stonebo1',
-    version='0.1.1',
+    name='notion-operator-stonebo1',
+    version='0.2.0',
     license='MIT',
     author="Jiabo Shi",
     author_email='stonebo0121@gmail.com',
