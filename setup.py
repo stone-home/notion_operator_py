@@ -12,7 +12,7 @@ def get_readme():
 
 
 setup(
-    name='notion-integration-operator-python',
+    name='notion-integration-operator-stonebo1',
     version='0.1.0',
     license='MIT',
     author="Jiabo Shi",
