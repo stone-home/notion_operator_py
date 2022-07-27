@@ -13,7 +13,7 @@ def get_readme():
 
 setup(
     name='notion-integration-operator-stonebo1',
-    version='0.1.0',
+    version='0.1.1',
     license='MIT',
     author="Jiabo Shi",
     author_email='stonebo0121@gmail.com',
