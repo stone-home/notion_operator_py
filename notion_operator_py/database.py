@@ -31,12 +31,9 @@ class Database:
 
     def create(self,
                builder: DatabasePropertiesBuilder,
-               title: str,
-               title_key: str,
                parent_id: str,
                parent_type: str = "page_id"):
         builder.edit_parent(parent_id=parent_id, parent_type=parent_type)
-        builder.edit_properties(title_key=title_key, title=title)
         self.client.databases.create(**builder.export2json())
 
     def query(self, database_id: str, filter: dict = None, sorts: dict = None):

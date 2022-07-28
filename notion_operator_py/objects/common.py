@@ -123,9 +123,18 @@ class People(NotionObject):
 
 class File(NotionObject):
     def __init__(self, name: str, url: str):
-        self._auto_update_attributes(type="external",
-                                     name=name,
+        self._auto_update_attributes(name=name,
                                      external={"url": url})
+
+
+class Icon(NotionObject):
+    def __init__(self, url: str):
+        self._auto_update_attributes(external={"url": url})
+
+
+class Cover(NotionObject):
+    def __init__(self, url: str):
+        self._auto_update_attributes(external={"url": url})
 
 
 class Formula(NotionObject):
@@ -144,4 +153,4 @@ class Parent(NotionObject):
 
 class Emoji(NotionObject):
     def __init__(self, emoji: str):
-        self._auto_update_attributes(type="emoji", emoji=emoji)
+        self._auto_update_attributes(emoji=emoji)

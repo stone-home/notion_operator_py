@@ -2,7 +2,7 @@
 # @Filename : database_properties
 # @Date : 2022-07-25-14-50
 # @Project: nt-integration-sdk
-
+import os
 from abc import abstractmethod
 from .common import Title, RichText, Select, Date, People, File, Formula, NotionObject
 
@@ -138,8 +138,8 @@ class MultipleSelectProperty(MultiOptionsPropertyObject):
     def _property_key(self):
         return "multi_select"
 
-    def __init__(self):
-        self._auto_update_attributes([])
+    def __init__(self, name: str, color: str = None):
+        self._auto_update_attributes([Select(name=name, color=color)])
 
     def add_select(self, name: str, color: str = None):
         self._add_property(Select(name=name, color=color))
@@ -150,8 +150,8 @@ class PeopleProperty(MultiOptionsPropertyObject):
     def _property_key(self):
         return "people"
 
-    def __init__(self):
-        self._auto_update_attributes([])
+    def __init__(self, user_id: str):
+        self._auto_update_attributes([People(user_id=user_id)])
 
     def add_people(self, user_id):
         self._add_property(People(user_id=user_id))
@@ -162,11 +162,11 @@ class FileProperty(MultiOptionsPropertyObject):
     def _property_key(self):
         return "files"
 
-    def __init__(self):
-        self._auto_update_attributes(files=[])
+    def __init__(self, url: str):
+        self._auto_update_attributes([File(name=os.path.basename(url), url=url)])
 
-    def add_file(self, name: str, url: str):
-        self._add_property(File(name, url))
+    def add_file(self, url: str):
+        self._add_property(File(name=os.path.basename(url), url=url))
 
 
 # -------------------------------------------------
@@ -246,11 +246,11 @@ class Properties(NotionObject):
     def add_formula(self, key: str, experssion: str):
         return self.update_property(key, FormulaProperty(experssion))
 
-    def add_multiple_select(self, key: str):
-        return self.update_property(key, MultipleSelectProperty())
+    def add_multiple_select(self, key: str, name: str, color: str = None):
+        return self.update_property(key, MultipleSelectProperty(name=name, color=color))
 
-    def add_people(self, key: str):
-        return self.update_property(key, PeopleProperty())
+    def add_people(self, key: str, user_id: str):
+        return self.update_property(key, PeopleProperty(user_id=user_id))
 
-    def add_file(self, key: str):
-        return self.update_property(key, FileProperty())
+    def add_file(self, key: str, url: str):
+        return self.update_property(key, FileProperty(url=url))

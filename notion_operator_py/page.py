@@ -27,10 +27,7 @@ class Page:
 
     def create(self,
                builder: PagePropertiesBuilder,
-               title: str,
-               title_key: str,
                parent_id: str,
                parent_type: str = "database_id"):
         builder.edit_parent(parent_id=parent_id, parent_type=parent_type)
-        builder.edit_properties(title_key=title_key, title=title)
         self.client.pages.create(**builder.export2json())

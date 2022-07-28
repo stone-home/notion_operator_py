@@ -30,7 +30,9 @@ __all__ = [
     "Parent",
     "File",
     "Emoji",
-    "RichText"
+    "RichText",
+    "Icon",
+    "Cover"
 ]
 
 

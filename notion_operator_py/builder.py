@@ -1,7 +1,10 @@
+import os.path
+
 from .objects import (
     NotionObject,
     Parent,
-    File,
+    Icon,
+    Cover,
     Emoji,
     Properties
 )
@@ -31,14 +34,15 @@ class BuilderObject(NotionObject):
 
 
 class PageAndDatabaseBuilder(BuilderObject):
-    def edit_properties(self, title_key: str, title: str):
+    def edit_properties(self, title_key: str, title: str) -> Properties:
         self._auto_update_attributes(properties=Properties(key=title_key, title=title))
+        return getattr(self, "properties")
 
     def edit_icon(self, icon: str, emoji: bool = False):
-        self._auto_update_attributes(icon=Emoji(icon) if emoji else File(name="icon", url=icon))
+        self._auto_update_attributes(icon=Emoji(icon) if emoji else Icon(url=icon))
 
     def edit_cover(self, cover: str):
-        self._auto_update_attributes(cover=(File(name="cover", url=cover)))
+        self._auto_update_attributes(cover=(Cover(url=cover)))
 
     def edit_url(self, url: str):
         self._auto_update_attributes(url=url)

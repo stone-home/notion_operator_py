@@ -71,4 +71,4 @@ class NotionObject(ABC):
         """
         Is an object method that is called if the object’s properties are not found.
         """
-        return ""
+        return None
