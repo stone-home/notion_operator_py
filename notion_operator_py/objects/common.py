@@ -154,3 +154,8 @@ class Parent(NotionObject):
 class Emoji(NotionObject):
     def __init__(self, emoji: str):
         self._auto_update_attributes(emoji=emoji)
+
+
+class RelationC(NotionObject):
+    def __init__(self, page_id: str):
+        self._auto_update_attributes(id=page_id)

@@ -4,7 +4,7 @@
 # @Project: nt-integration-sdk
 import os
 from abc import abstractmethod
-from .common import Title, RichText, Select, Date, People, File, Formula, NotionObject
+from .common import Title, RichText, Select, Date, People, File, Formula, NotionObject, RelationC
 
 
 class PropertyObject(NotionObject):
@@ -169,6 +169,18 @@ class FileProperty(MultiOptionsPropertyObject):
         self._add_property(File(name=os.path.basename(url), url=url))
 
 
+class RelationProperty(MultiOptionsPropertyObject):
+    @property
+    def _property_key(self) -> str:
+        return "relation"
+
+    def __init__(self, page_id: str):
+        self._auto_update_attributes([RelationC(page_id)])
+
+    def add_relation(self, page_id):
+        self._add_property(RelationC(page_id))
+
+
 # -------------------------------------------------
 class Properties(NotionObject):
     def __init__(self, key: str, title: str):
@@ -254,3 +266,7 @@ class Properties(NotionObject):
 
     def add_file(self, key: str, url: str):
         return self.update_property(key, FileProperty(url=url))
+
+    def add_relation(self, key: str, page_id: str):
+        return self.update_property(key, RelationProperty(page_id))
+
