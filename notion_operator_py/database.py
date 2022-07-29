@@ -34,8 +34,8 @@ class Database:
                parent_id: str,
                parent_type: str = "page_id"):
         builder.edit_parent(parent_id=parent_id, parent_type=parent_type)
-        self.client.databases.create(**builder.export2json())
+        return self.client.databases.create(**builder.export2json())
 
     def query(self, database_id: str, filter: dict = None, sorts: dict = None):
         # "filter", "sorts", "start_cursor", "page_size"
-        self.client.databases.query(database_id=database_id, filter=filter, sorts=sorts)
+        return self.client.databases.query(database_id=database_id, filter=filter, sorts=sorts)

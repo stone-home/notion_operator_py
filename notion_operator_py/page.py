@@ -30,4 +30,4 @@ class Page:
                parent_id: str,
                parent_type: str = "database_id"):
         builder.edit_parent(parent_id=parent_id, parent_type=parent_type)
-        self.client.pages.create(**builder.export2json())
+        return self.client.pages.create(**builder.export2json())
