@@ -14,7 +14,7 @@ def get_readme():
 
 setup(
     name='notion_operator_py',
-    version="0.3.0",
+    version="0.4.0",
     license='MIT',
     author="Jiabo Shi",
     author_email='stonebo0121@gmail.com',
