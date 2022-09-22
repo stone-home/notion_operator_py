@@ -7,6 +7,10 @@ import os
 from setuptools import setup, find_packages
 
 
+def get_version():
+    return os.environ.get("ReleaseVersion", "v0.0.0")
+
+
 def get_readme():
     with open("README.md", "r") as file:
         return file.read()
@@ -14,15 +18,15 @@ def get_readme():
 
 setup(
     name='notion_operator_py',
-    version="0.5.1",
+    version=get_version(),
     license='MIT',
     author="Stone Shi",
-    author_email='stonebo@fastmail.com',
+    author_email='github@stone-bo.com',
     description="Python Client for Notion Integration Only",
     long_description=get_readme(),
     long_description_type="text/markdown",
     packages=find_packages(),
-    url='https://github.com/stonebo/notion-integration-sdk',
+    url='https://github.com/stone-home/notion_operator_py',
     python_requires=">=3.7, <4",
     install_requires=[
           'notion-client >= 1.0.0',
