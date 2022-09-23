@@ -1,5 +1,7 @@
 # notion-integration-sdk
 
+This is a notion SDK
+
 ## Overview
 
 ![class diagram](docs/assets/module_dependancy_diagram.drawio.png)
